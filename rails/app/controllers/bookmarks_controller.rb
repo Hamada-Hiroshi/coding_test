@@ -1,14 +1,10 @@
 class BookmarksController < ApplicationController
   before_action :set_user
 
-  def index
-    @bookmarked_products = @user.bookmarked_products
-  end
-
   def create
     @bookmark = @user.bookmarks.new(bookmark_params)
     if @bookmark.save
-      render json: @bookmark, status: :created
+      render json: @bookmark.as_json, status: :created
     else
       render json: { errors: @bookmark.errors.full_messages }, status: :bad_request
     end
@@ -25,8 +21,8 @@ class BookmarksController < ApplicationController
 
   private
 
-  def set_user
-    @user = User.find(params[:user_id])
+  def current_user
+    @user = User.find(1)
   end
 
   def bookmark_params

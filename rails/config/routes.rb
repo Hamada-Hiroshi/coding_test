@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :users do
-    resources :bookmarks, only: [:index, :create, :destroy]
+  resources :products , only: [:index] do
+    resources :bookmarks, only: [:create, :destroy]
+  end
+  resources :users, only: [] do
+    resources :bookmarks, only: [:index], controller: "users/bookmarks"
   end
 end
