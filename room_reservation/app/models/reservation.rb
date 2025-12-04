@@ -9,9 +9,7 @@ class Reservation < ApplicationRecord
   private
 
   def end_time_after_start_time
-    return if end_at.blank? || start_at.blank?
-
-    if end_at <= start_at
+    unless DatetimeRange.new(start_at, end_at).valid?
       errors.add(:end_at, "must be after the start time")
     end
   end
